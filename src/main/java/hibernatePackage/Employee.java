@@ -11,18 +11,18 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Data
-@Entity
+@Entity 
 @Table(name="Employee")
 public  class Employee {
 	 @Id @GeneratedValue (strategy = GenerationType.AUTO)
-	   @Column(name = "emp_id")
-	 	    private int emp_id;
+	   @Column(name = "employee_id")
+	 	    private int employeeId;
 
 	   @Column(name = "first_name")
-	  	   private String first_name;
+	  	   private String firstName;
 
 	   @Column(name = "last_name")
-	   	   private String last_name;
+	   	   private String lastName;
 	   
 	   @Column(name = "phone")
 	   	   private String phone;
@@ -33,7 +33,7 @@ public  class Employee {
 	   @Column(name = "salary")
 	   	   private int salary;
 	   @Column(name = "Dept_Id")
-   	   private int Deptid;
+   	   private int departmentId;
 	   
 	   
 }

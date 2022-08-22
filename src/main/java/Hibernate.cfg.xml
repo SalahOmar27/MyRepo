@@ -3,15 +3,25 @@
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
+   <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.implicit_naming_strategy">default</property>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/salahdb</property>
+    <property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
+    <property name="hibernate.hikari.minimumIdle">5</property>
+    <property name="hibernate.hikari.maximumPoolSize">20</property>
+    <property name="hibernate.hikari.idleTimeout">30000</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">1234</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/salahdb?serverTimezone=UTC</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.connection.autocommit">true</property>
+    
+ 
+    <property name="hibernate.generate_statistics">true</property> <!-- This affects performance, use only in development -->
     <property name="show_sql">true</property>
-    <property name="hbm2ddl.auto">update</property>
+    
     <mapping resource="/hibernatePackage/Department.hbm.xml"/> 
-    <mapping resource="/hibernatePackage/Employee.hbm.xml"/> 
+    <mapping resource="/hibernatePackage/Employee.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

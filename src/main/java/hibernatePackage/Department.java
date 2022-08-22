@@ -12,14 +12,14 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Data
-@Entity
+@Entity 
 @Table (name ="Department")
 public  class Department {
 	@Id @GeneratedValue (strategy = GenerationType.AUTO)
-	@Column(name="Dept_Id")
-	private int DeptId;
+	@Column(name="department_id")
+	private int departmentId;
 	
-	@Column(name="Dept_Name")
-	 private String Dept_Name;
+	@Column(name="department_name")
+	 private String departmentName;
 
 }

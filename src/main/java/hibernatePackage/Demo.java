@@ -1,138 +1,94 @@
 package hibernatePackage;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Demo {
+	static Logger logger = LoggerFactory.getLogger(Demo.class);
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		AddDepartment("IT");
-		
-		AddEmployee("Mazen", "ali", "0795284937", "mazen@gmail.com",2250, 5);
-		
-		Employee10thMaxSalary();
-		
-		EmployeePerDepartments();
-
+		addDepartment("Finance");
+		addEmployee("Sameer", "Omar", "0791124447", "basel@gmail.com",1650, 6);
+		employee10thMaxSalary();
+		employeePerDepartments();
 	}
-	
-	//----------------------------------------------------------------------------
-	
-	private static void AddEmployee(String fn, String ln, String tel, String email, int sal,int deptid) {
-		SessionFactory sessionFactory = new  Configuration().configure().buildSessionFactory();
+	//------------------------------------ADD EMPLOYEE----------------------------------------
+	private static void addEmployee(String first_name, String last_name, String phone, String email, int salary,int deptid) {
+		SessionFactory sessionFactory =  new Configuration().configure("Hibernate.cfg.xml").buildSessionFactory();
 		  Session session = sessionFactory.openSession();
-		
 		try {
-			Connection con =dataSource.getConnection();
 			session.beginTransaction();
-			Employee emp= new Employee();
-			emp.setFirst_name(fn);
-			emp.setLast_name(ln);
-			emp.setPhone(tel);
-			emp.setEmail(email);
-			emp.setSalary(sal);
-			emp.setDeptid(deptid);
-			
-			session.persist(emp);
+			Employee employee= new Employee();
+		    employee.setFirstName(first_name);
+			employee.setLastName(last_name);
+			employee.setPhone(phone);
+			employee.setEmail(email);
+			employee.setSalary(salary);
+			employee.setDepartmentId(deptid);
+			session.persist(employee);
 			session.getTransaction().commit();
 	
-		} 
-		
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
+		}catch (Exception e) {
+			logger.error("Oppes, could not add infromation, please enter correct info!");
 			session.close();
-			dataSource.close();
 		}
-
 	}
-	//--------------------------------------------------------------------
-	private static void AddDepartment(String name) {
-		SessionFactory sessionFactory = new  Configuration().configure().buildSessionFactory();
-		  Session session = sessionFactory.openSession();
-		
-		try {
-			Connection con =dataSource.getConnection();
-			session.beginTransaction();
-			Department dept = new Department();
-			dept.setDept_Name(name);
-			
-			session.persist(dept);
-			session.getTransaction().commit();	
-		} 
-		
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			session.close();
-			dataSource.close();
-		}
-		
-	}
-	//----------------------------------------------------------------------------
-	public static void Employee10thMaxSalary() {
-		SessionFactory sessionFactory = new  Configuration().configure().buildSessionFactory();
+	//--------------------------------ADD DEPARTMENT USING @Builder--------------------------
+	/*private static void addDepratment() {
+		SessionFactory sessionFactory =  new Configuration().configure("Hibernate.cfg.xml").buildSessionFactory();
 		  Session session = sessionFactory.openSession();
 		  try {
-			  Connection con =dataSource.getConnection();
-	          Criteria cr = session.createCriteria(Employee.class);
-			  List<Employee> empList = cr.list();
+			  session.beginTransaction();
+			 Department depatrment = Department.builder().departmentName("ggg").build();
+			  session.persist(depatrment);
+			  session.getTransaction().commit();
+			  
+		} catch (Exception e) {
+			// TODO: handle exception
+			session.close(); 
+		}
+	}*/
+	//--------------------------------ADD DEPARTMENT------------------------------------
+	private static void addDepartment(String departmentName) {
+		SessionFactory sessionFactory = new Configuration().configure("Hibernate.cfg.xml").buildSessionFactory();
+		  Session session = sessionFactory.openSession();
+		try {
+			session.beginTransaction();
+			Department department = new Department();
+			department.setDepartmentName(departmentName);
+			session.persist(department);
+			session.getTransaction().commit();	
+		}finally {
+			session.close();
+		}
+	}
+	//------------------------------------EMPLOYEE 10TH MAX SALARY----------------------------------------
+	public static void employee10thMaxSalary() {
+		SessionFactory sessionFactory =  new Configuration().configure("Hibernate.cfg.xml").buildSessionFactory();
+		  Session session = sessionFactory.openSession();
+		  try {
+			  List<Employee> empList ;
 			  empList = session.createCriteria(Employee.class)
-						.addOrder(Order.desc("salary"))
+						.addOrder(Order.desc("salry"))
 						.setFirstResult(9)
 						.setMaxResults(1)
 						.list();
-			for(Employee emp : empList) {
-				
-				System.out.println(emp.getFirst_name()+" "+emp.getSalary());
-				
-			}
-			 
-			
+			for(Employee employee : empList) {
+			    logger.info(employee.getFirstName()+" "+employee.getSalary());
+			}	 	
 		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
-			
-			dataSource.close();
+			logger.error("Could not get the result!");
+		}finally {	
 		}
 	}
-	//----------------------------------------------------------------------------
-	public static void EmployeePerDepartments() {
-		SessionFactory sessionFactory = new  Configuration().configure().buildSessionFactory();
-		  Session session = sessionFactory.openSession();
-		  try {
+	//--------------------------------NUMBER OF EMPLOYEE IN EACH DEPARTMENT--------------------------------------------
+	public static void employeePerDepartments() {
 		
-		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
-			
-			dataSource.close();
-		}
-	}
-	//----------------------------------------------------------------------------
-	protected static HikariDataSource dataSource ;
-
-	static {
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl("jdbc:mysql://localhost:3306/salahdb");
-		config.setUsername("root");
-		config.setPassword("1234");
-	//	config.addDataSourceProperty("minimumIdle", "5");
-	//	config.addDataSourceProperty("maximumPoolSize", "25");
-		dataSource = new HikariDataSource(config);
 	}
 }
+

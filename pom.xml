@@ -47,12 +47,6 @@
     <artifactId>slf4j-api</artifactId>
     <version>2.0.0-beta1</version>
 </dependency>
-	<!-- https://mvnrepository.com/artifact/javassist/javassist -->
-<dependency>
-    <groupId>javassist</groupId>
-    <artifactId>javassist</artifactId>
-    <version>3.12.1.GA</version>
-</dependency>
 
 
 <dependency>
@@ -98,11 +92,7 @@
     <artifactId>hibernate-jpa-2.1-api</artifactId>
     <version>1.0.0.Final</version>
 </dependency>
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-entitymanager</artifactId>
-    <version>5.6.10.Final</version>
-</dependency>
+
 <dependency>
     <groupId>org.glassfish.jaxb</groupId>
     <artifactId>jaxb-runtime</artifactId>

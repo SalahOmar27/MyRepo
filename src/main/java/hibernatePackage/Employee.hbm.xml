@@ -8,15 +8,15 @@
       
      
       
-      <id name = "emp_id" column = "emp_id" type = "int">
+      <id name = "employeeId" column = "employee_id" type = "int">
          <generator class="increment" />
       </id>
-      <property name = "first_name" column = "first_name" type = "string"/>
-      <property name = "last_name" column = "last_name" type = "string"/>
+      <property name = "firstName" column = "first_name" type = "string"/>
+      <property name = "lastName" column = "last_name" type = "string"/>
       <property name = "phone" column = "phone" type = "string"/>
       <property name = "email" column = "email" type = "string"/>
       <property name = "salary" column = "salary" type = "int"/>
-      <property name = "Deptid" column = "Dept_Id" type = "int"/>
+      <property name = "departmentId" column = "department_id" type = "int"/>
      
       
           <!-- 

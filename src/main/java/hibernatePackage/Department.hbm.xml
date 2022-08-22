@@ -8,11 +8,11 @@
       
      
       
-      <id name = "DeptId" column = "Dept_Id" type = "int">
+      <id name = "departmentId" column = "department_id" type = "int">
           <generator class="increment" />
       </id>
       
-      <property name = "Dept_Name" column = "Dept_Name" type = "string"/>
+      <property name = "departmentName" column = "department_name" type = "string"/>
 
       
    </class>
