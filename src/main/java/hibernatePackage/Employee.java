@@ -10,7 +10,9 @@ import javax.persistence.Table;
 
 import lombok.*;
 
-@Data
+@Setter
+@Getter
+@Builder
 @Entity 
 @Table(name="Employee")
 public  class Employee {
